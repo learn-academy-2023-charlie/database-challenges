@@ -102,3 +102,8 @@ SELECT headofstate
 FROM country
 Order By population DESC
 LIMIT 1
+
+Of the countries with the top 10 gnp, which has the smallest population? (HINT: Canada)
+
+
+Of the 10 least populated countries with permament residents (a non-zero population), which has the largest surfacearea? (HINT: Svalbard and Jan Mayen)
