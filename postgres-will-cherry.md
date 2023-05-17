@@ -459,18 +459,130 @@ WHERE population > 278356000
 "Tuvalu"	"Constitutional Monarchy"	1978
 
 ORDER BY
+
 * Which fifteen countries have the lowest life expectancy? (HINT: starts with Zambia, ends with Sierra Leonne)
+SELECT name, population, lifeexpectancy
+FROM country
+ORDER BY lifeexpectancy
+
+"Zambia"	9169000	37.2
+"Mozambique"	19680000	37.5
+"Malawi"	10925000	37.6
+"Zimbabwe"	11669000	37.8
+"Angola"	12878000	38.3
+"Rwanda"	7733000	39.3
+"Botswana"	1622000	39.3
+"Swaziland"	1008000	40.4
+"Niger"	10730000	41.3
+"Namibia"	1726000	42.5
+"Uganda"	21778000	42.9
+"Central African Republic"	3615000	44
+"Cï¿½te dï¿½Ivoire"	14786000	45.2
+"Ethiopia"	62565000	45.2
+"Sierra Leone"	4854000	45.3
+
 * Which fifteen countries have the highest life expectancy? (HINT: starts with Andorra, ends with Spain)
+SELECT name, population, lifeexpectancy
+FROM country
+ORDER BY lifeexpectancy
+
+"Zambia"	9169000	37.2
+"Mozambique"	19680000	37.5
+"Malawi"	10925000	37.6
+"Zimbabwe"	11669000	37.8
+"Angola"	12878000	38.3
+"Rwanda"	7733000	39.3
+"Botswana"	1622000	39.3
+"Swaziland"	1008000	40.4
+"Niger"	10730000	41.3
+"Namibia"	1726000	42.5
+"Uganda"	21778000	42.9
+"Central African Republic"	3615000	44
+"Cï¿½te dï¿½Ivoire"	14786000	45.2
+"Ethiopia"	62565000	45.2
+"Sierra Leone"	4854000	45.3
+"Monaco"	34000	78.8
+"Cayman Islands"	38000	78.9
+"Gibraltar"	25000	79
+"Italy"	57680000	79
+"Iceland"	279000	79.4
+"Canada"	31147000	79.4
+"Hong Kong"	6782000	79.5
+"Sweden"	8861400	79.6
+"Switzerland"	7160400	79.6
+"Australia"	18886000	79.8
+"Singapore"	3567000	80.1
+"Japan"	126714000	80.7
+"San Marino"	27000	81.1
+"Macao"	473000	81.6
+"Andorra"	78000	83.5
+
 * Which five countries have the lowest population density (density = population / surfacearea)? (HINT: starts with Greenland)
+SELECT name, population, surfacearea,
+population / surfacearea AS density
+FROM country
+ORDER BY density ASC
+
+
+"Greenland"	56000	2.16609e+06	0.025853034730782192
+"Svalbard and Jan Mayen"	3200	62422	0.051263977443849924
+"Falkland Islands"	2000	12173	0.16429803663846218
+"Pitcairn"	50	49	1.0204081632653061
+"Western Sahara"	293000	266000	1.1015037593984962
+
 * Which countries have the highest population density?(HINT: starts with Macao)
+SELECT name, population, surfacearea,
+population / surfacearea AS density
+FROM country
+ORDER BY density DESC
+
+"Macao"	473000	18	26277.777777777777
+"Monaco"	34000	1.5	22666.666666666668
+"Hong Kong"	6782000	1075	6308.837209302325
+"Singapore"	3567000	618	5771.844660194175
+"Gibraltar"	25000	6	4166.666666666667
+
 * Which is the smallest country by area? (HINT: .4)
+SELECT name, population, surfacearea
+FROM country
+ORDER BY surfacearea ASC
+
+"Holy See (Vatican City State)"	1000	0.4
+
 * Which is the smallest country by population? (HINT: 50)?
+SELECT name, population, surfacearea
+FROM country
+ORDER BY population ASC
+
+"Pitcairn"	50	49
+
 * Which is the biggest country by area? (HINT: 1.70754e+07)
+SELECT name, population, surfacearea
+FROM country
+ORDER BY surfacearea DESC
+
+"Russian Federation"	146934000	1.70754e+07
+
 * Which is the biggest country by population? (HINT: 1277558000)
+SELECT name, population, surfacearea
+FROM country
+ORDER BY population DESC
+
+"China"	1277558000	9.5729e+06
+
 * Who is the most influential head of state measured by population? (HINT: Jiang Zemin)
+SELECT name, population, surfacearea, headofstate
+FROM country
+ORDER BY population DESC`
+
+"China"	1277558000	9.5729e+06	"Jiang Zemin"
 
 Subqueries: WITH
 * Of the countries with the top 10 gnp, which has the smallest population? (HINT: Canada)
+
+
+
+
 * Of the 10 least populated countries with permament residents (a non-zero population), which has the largest surfacearea? (HINT: Svalbard and Jan Mayen)
 
 Aggregate Functions: GROUP BY
