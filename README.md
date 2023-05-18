@@ -65,3 +65,13 @@ Branches exist on your local and on the remote. Always delete your branch in bot
 - $ `git checkout main`
 - $ `git pull origin main`
 - $ `git branch -d <branch-name>`
+
+### Deleting a Rails Application
+Because the rails application is stored in your local database, you have to drop the database before removing the application from your local machine.
+- Ensure you are on the rails application in the terminal in order to drop its database
+- Stop the server if running and drop the database
+  - Control + C  
+  - $ `rails db:drop`
+- To permanently remove the application from your local machine, you have to go back one level
+  - $ `cd ..`
+  - $ `rm -rf <rails_app_name>` 
