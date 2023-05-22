@@ -1,0 +1,144 @@
+<!-- Challenge: Rolodex
+As a developer, I have been tasked with creating a database model that will be used in a rolodex application. I want to ensure that the database behaves as expected and the necessary actions can be performed on the database instances.
+
+Set Up
+Create a new Rails app named 'rolodex_challenge'. -->
+rails new rolodex_challenge -d postgresql -T
+
+<!-- Create the database. The output in the terminal should look like this:
+Created database 'rolodex_development'
+Created database 'rolodex_test'-->
+rails db:create
+
+<!-- Generate a model called Person with a first_name, last_name, and phone. All fields should be strings. -->
+rails generate model Person first_name:string last_name:string phone:string
+
+<!-- Run a migration to set up the database. -->
+rails db:migrate
+== 20230518175544 CreatePeople: migrating =====================================
+-- create_table(:people)
+   -> 0.0615s
+== 20230518175544 CreatePeople: migrated (0.0618s) ============================
+
+<!-- Open up Rails console. -->
+rails c
+
+<!-- Actions -->
+<!-- Add five family members into the Person table in the Rails console. Retrieve all the items in the database. Add yourself to the Person table. -->
+
+Person.create first_name:"", last_name:"", phone:""
+
+3.2.0 :021 > Person.all
+ Person Load (1.7ms) SELECT "people".* FROM "people"
+ =>
+[#<Person:0x000000010c33b410
+ id: 1,
+ first_name: "Sarah",
+ last_name: "Cherry",
+ phone: "(372)843-7726",
+ created_at: Thu, 18 May 2023 17:48:33.702749000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:48:33.702749000 UTC +00:00>,
+ <!-- created and deleted duplicate evil clone-->
+ #<Person:0x000000010c33b2d0
+ id: 3,
+ first_name: "Ramgel",
+ last_name: "Romo",
+ phone: "(372)843-4426",
+ created_at: Thu, 18 May 2023 17:52:29.552553000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:52:29.552553000 UTC +00:00>,
+ #<Person:0x000000010c33b190
+ id: 4,
+ first_name: "Henrique",
+ last_name: "Lambertucci",
+ phone: "(372)843-0006",
+ created_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00>,
+ #<Person:0x000000010c33b050
+ id: 5,
+ first_name: "Scott",
+ last_name: "Tuschl",
+ phone: "(356)005-4406",
+ created_at: Thu, 18 May 2023 17:53:45.943204000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:53:45.943204000 UTC +00:00>,
+ #<Person:0x000000010c33af10
+ id: 6,
+ first_name: "Surielis",
+ last_name: "Rodriguez",
+ phone: "(766)555-4446",
+ created_at: Thu, 18 May 2023 17:54:36.109765000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:54:36.109765000 UTC +00:00>,
+ #<Person:0x000000010c33add0
+ id: 7,
+ first_name: "Catalino",
+ last_name: "Rodriguez",
+ phone: "(603)-442-4253",
+ created_at: Thu, 18 May 2023 17:55:25.318500000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 18:04:16.903261000 UTC +00:00>]
+ 
+<!-- Retrieve all the entries that have the same last_name as you. -->
+
+Person.where last_name:"Lambertucci"
+
+#<Person:0x000000010c33b190
+ id: 4,
+ first_name: "Henrique",
+ last_name: "Lambertucci",
+ phone: "(372)843-0006",
+ created_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00>,
+ 
+<!-- Update the phone number of the last entry in the database. -->
+
+person.last
+catalino.phone = "(603)-442-4253"
+catalino.save
+
+<!-- Retrieve the first_name of the third Person in the database. -->
+
+Person.find 4 <!--because of our destroyed evil clone at id 2-->
+#<Person:0x000000010c33b190
+ id: 4,
+ first_name: "Henrique",
+ last_name: "Lambertucci",
+ phone: "(372)843-0006",
+ created_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00>
+
+Person.third
+#<Person:0x000000010c33b190
+ id: 4,
+ first_name: "Henrique",
+ last_name: "Lambertucci",
+ phone: "(372)843-0006",
+ created_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00,
+ updated_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00>
+
+<!-- Stretch Challenges -->
+
+<!-- Update all the family members with the same last_name as you, to have the same phone number as you. -->
+<!-- we used our LEARN fam so CRod and Suri are in here -->
+same_name = Person.where last_name: "Rodriguez"
+3.2.0 :043 > same_name.update(phone:"(372)843-0006")
+  TRANSACTION (20.3ms)  BEGIN
+  Person Update (1.0ms)  UPDATE "people" SET "phone" = $1, "updated_at" = $2 WHERE "people"."id" = $3  [["phone", "(372)843-0006"], ["updated_at", "2023-05-18 18:56:56.472695"], ["id", 6]]                            
+  TRANSACTION (0.8ms)  COMMIT                                 
+  TRANSACTION (0.2ms)  BEGIN                                  
+  Person Update (0.3ms)  UPDATE "people" SET "phone" = $1, "updated_at" = $2 WHERE "people"."id" = $3  [["phone", "(372)843-0006"], ["updated_at", "2023-05-18 18:56:56.496851"], ["id", 7]]                            
+  TRANSACTION (0.4ms)  COMMIT
+
+<!-- Remove all family members that do not have your last_name. -->
+
+3.2.0 :079 > Person.delete([1,3,5,6,7,8])
+  Person Delete All (3.0ms)  DELETE FROM "people" WHERE "people"."id" IN ($1, $2, $3, $4, $5, $6)  [["id", 1], ["id", 3], ["id", 5], ["id", 6], ["id", 7], ["id", 8]]                                                   
+ => 6                                                         
+3.2.0 :080 > Person.all
+  Person Load (7.6ms)  SELECT "people".* FROM "people"
+ =>                                                           
+[#<Person:0x000000010cc16558                                  
+  id: 4,                                                      
+  first_name: "Henrique",                                     
+  last_name: "Lambertucci",                                   
+  phone: "(372)843-0006",                                     
+  created_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00, 
+  updated_at: Thu, 18 May 2023 17:53:01.335178000 UTC +00:00>] 
+3.2.0 :081 > 
