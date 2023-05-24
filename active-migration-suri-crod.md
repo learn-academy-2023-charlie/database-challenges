@@ -2,6 +2,7 @@ Challenges
 
 #Add five entries to the database via the Rails console
 
+
     Movie.create(title: "Interstellar", category: "Sci-Fi")
     Movie.create(title: "Jurassic Park", category: "Sci-Fi")
     Movie.create(title: "Super Mario Bros", category: "Animation")
